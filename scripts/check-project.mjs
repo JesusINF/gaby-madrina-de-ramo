@@ -27,11 +27,14 @@ expect(app.includes("signInAnonymously(auth)") && app.includes("setDoc("), "Subm
 expect(!/\b(getDoc|getDocs|onSnapshot|updateDoc|deleteDoc)\s*\(/.test(app), "Client should not read response documents or modify/delete them.");
 expect(["mary-everardo", "felipe-banda", "gaby-ramo", "caro-cuchillo-pala"].every((id) => rules.includes(`match /responses/${id}`)), "Rules should retain deployed Mary/Felipe invitations and include both new paths.");
 expect(rules.includes("match /{document=**}") && rules.includes("allow read, write: if false;"), "Rules should keep default deny.");
-expect(svg.includes("<animateMotion") && svg.includes('begin="indefinite"'), "Bouquet motion should be native SVG and controlled by JavaScript scroll progress.");
+expect(svg.includes('id="bouquet-art"') && !svg.includes("<animateMotion"), "AI bouquet artwork should remain an image inside the SVG without scripted SMIL motion.");
 expect(!/<(?:path|circle|rect|text|polygon|line|polyline)\b/i.test(svg), "Hero SVG should not add drawn artwork or text.");
-expect(app.includes("setCurrentTime(svgMotionStart + progress * 1.4)") && app.includes('addEventListener("scroll", scrubBouquetToScroll'), "SVG bouquet motion should be linked to scroll.");
+expect(css.includes("animation-timeline: scroll(root block)") && css.includes("animation-range: 0px 22vh"), "Bouquet should use a native CSS scroll timeline.");
+expect(app.includes('CSS.supports("animation-timeline: scroll(root block)")') && app.includes('classList.add("is-scroll-active")'), "Older browsers should receive a one-time intersection-triggered motion fallback.");
+expect(!/addEventListener\s*\(\s*["']scroll["']/.test(app), "Motion should not install a JavaScript scroll listener.");
 expect(css.includes("prefers-reduced-motion") && app.includes("reducedMotion.matches"), "Motion should honor the reduced-motion preference.");
 expect(css.includes("@media (min-width: 760px)"), "Styles should support wider layouts.");
+expect(!/min-width:\s*320px/.test(css), "Mobile layouts should not force a 320px minimum when the usable viewport is narrower.");
 expect(workflow.includes("actions/deploy-pages@v4") && workflow.includes("actions/upload-pages-artifact@v3"), "GitHub Pages workflow should deploy the static site.");
 expect(firebaseConfig.includes('projectId: "padrinos-de-anillo-2027"'), "Public client config should target the existing Firebase project.");
 

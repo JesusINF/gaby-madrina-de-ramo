@@ -23,12 +23,10 @@
 }
 
 html {
-  min-width: 320px;
   background: var(--paper);
 }
 
 body {
-  min-width: 320px;
   margin: 0;
   color: var(--ink);
   background: var(--paper);
@@ -93,6 +91,32 @@ a:focus-visible {
   width: 100%;
   height: 100%;
   overflow: visible;
+}
+
+#bouquet-art {
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
+
+@supports (animation-timeline: scroll(root block)) {
+  #bouquet-art {
+    animation-name: bouquet-scroll;
+    animation-duration: auto;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-timeline: scroll(root block);
+    animation-range: 0px 22vh;
+  }
+}
+
+@supports not (animation-timeline: scroll(root block)) {
+  #bouquet-art {
+    transition: transform 1.4s cubic-bezier(0.2, 0.7, 0.25, 1);
+  }
+
+  .hero__art.is-scroll-active #bouquet-art {
+    transform: translate(15%, -21.4%);
+  }
 }
 
 .hero__copy {
@@ -454,6 +478,15 @@ a:focus-visible {
   }
 }
 
+@keyframes bouquet-scroll {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(15%, -21.4%);
+  }
+}
+
 @media (min-width: 760px) {
   .hero {
     grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
@@ -571,5 +604,11 @@ a:focus-visible {
   .motion-ready [data-reveal] {
     opacity: 1;
     transform: none;
+  }
+
+  #bouquet-art {
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
   }
 }

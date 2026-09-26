@@ -15,14 +15,11 @@ const cancelButton = document.querySelector("#cancel-accept");
 const dialog = document.querySelector("#confirm-dialog");
 const responseStatus = document.querySelector("#response-status");
 const confirmStatus = document.querySelector("#confirm-status");
-const heroIllustration = document.querySelector("#hero-illustration");
-const bouquetMotion = document.querySelector("#bouquet-motion");
+const heroArt = document.querySelector(".hero__art");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 let authRequest;
 let isSubmitting = false;
-let svgMotionStart = 0;
-let scrollFrame = 0;
 
 function hasLocalResponse() {
   try {
@@ -109,39 +106,21 @@ dialog.addEventListener("click", (event) => {
 
 if (hasLocalResponse()) showAcceptedState();
 
-function scrubBouquetToScroll() {
-  if (!heroIllustration || !bouquetMotion || reducedMotion.matches || scrollFrame) return;
-  scrollFrame = window.requestAnimationFrame(() => {
-    scrollFrame = 0;
-    const range = Math.max(1, window.innerHeight * 0.22);
-    const progress = Math.min(1, Math.max(0, window.scrollY / range));
-    heroIllustration.setCurrentTime(svgMotionStart + progress * 1.4);
-  });
-}
-
-function beginScrollLinkedArt() {
-  if (!heroIllustration || !bouquetMotion || reducedMotion.matches) return;
-  heroIllustration.unpauseAnimations();
-  bouquetMotion.beginElement();
-  svgMotionStart = bouquetMotion.getStartTime();
-  heroIllustration.pauseAnimations();
-  scrubBouquetToScroll();
-}
-
-if (heroIllustration && bouquetMotion) {
-  heroIllustration.pauseAnimations();
-  heroIllustration.setCurrentTime(0);
-  beginScrollLinkedArt();
-  window.addEventListener("scroll", scrubBouquetToScroll, { passive: true });
-  window.addEventListener("resize", scrubBouquetToScroll, { passive: true });
-  reducedMotion.addEventListener("change", (event) => {
-    heroIllustration.pauseAnimations();
-    if (event.matches) {
-      heroIllustration.setCurrentTime(svgMotionStart);
-    } else {
-      beginScrollLinkedArt();
+if (
+  heroArt &&
+  !CSS.supports("animation-timeline: scroll(root block)") &&
+  !reducedMotion.matches &&
+  "IntersectionObserver" in window
+) {
+  const scrollMotionObserver = new IntersectionObserver((entries, observer) => {
+    if (entries.some((entry) => entry.isIntersecting)) {
+      heroArt.classList.add("is-scroll-active");
+      observer.disconnect();
     }
-  });
+  }, { threshold: 0, rootMargin: "0px 0px -45% 0px" });
+
+  const scrollMotionTrigger = document.querySelector(".letter");
+  if (scrollMotionTrigger) scrollMotionObserver.observe(scrollMotionTrigger);
 }
 
 if ("IntersectionObserver" in window && !reducedMotion.matches) {
