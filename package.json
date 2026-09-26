@@ -1,0 +1,10 @@
+{
+  "name": "invitacion-gaby-ramo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Invitación estática para Gaby como madrina de ramo para lanzar.",
+  "scripts": {
+    "check": "node scripts/check-project.mjs"
+  }
+}

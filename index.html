@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#f6f1e8">
+    <meta name="description" content="Una invitación muy especial para Gaby: ¿quieres ser nuestra madrina de ramo para lanzar?">
+    <title>Para Gaby — Madrina de ramo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+    <main id="contenido">
+      <section class="hero" id="inicio" aria-labelledby="hero-title">
+        <div class="hero__art">
+          <svg id="hero-illustration" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1111" preserveAspectRatio="xMidYMid meet" role="img" aria-label="El Santuario del Señor de La Piedad junto a un ramo de flores." focusable="false">
+            <image href="assets/templo-transparente.png" x="0" y="0" width="1000" height="1111" preserveAspectRatio="xMidYMid meet" />
+            <image href="assets/ramo-transparente.png" x="515" y="600" width="420" height="560" preserveAspectRatio="xMidYMid meet">
+              <animateMotion id="bouquet-motion" path="M 0 0 C 35 -74 85 -155 150 -238" begin="indefinite" dur="1.4s" fill="freeze" />
+            </image>
+          </svg>
+        </div>
+
+        <div class="hero__copy">
+          <p class="eyebrow">UNA PREGUNTA MUY ESPECIAL · PARA GABY</p>
+          <h1 id="hero-title">
+            <span class="hero__name">Gaby,</span>
+            <span class="hero__question">¿quieres ser nuestra</span>
+            <span class="hero__role">madrina de ramo para lanzar?</span>
+          </h1>
+          <p class="hero__intro">Hay momentos que se vuelven todavía más bonitos cuando los compartimos con las personas que queremos.</p>
+          <a class="hero__link" href="#fecha">Ver fecha y detalles de la celebración</a>
+        </div>
+      </section>
+
+      <section class="letter section-reveal" aria-labelledby="letter-title" data-reveal>
+        <p class="eyebrow eyebrow--sage">PARA ALGUIEN MUY QUERIDA</p>
+        <h2 id="letter-title">Tu cariño también tendrá un lugar en nuestra historia.</h2>
+        <p class="letter__body">Nos hace ilusión que estés cerca en un día que significa tanto para nosotros. Tu alegría, tu ternura y esa forma tan tuya de acompañar hacen especial cualquier momento.</p>
+      </section>
+
+      <section class="date section-reveal" id="fecha" aria-labelledby="date-title" data-reveal>
+        <div>
+          <p class="eyebrow eyebrow--sage">GUARDA ESTA FECHA</p>
+          <h2 id="date-title"><time datetime="2027-01-23">23-01-2027</time></h2>
+        </div>
+        <p class="date__place">La Piedad,<br>Michoacán</p>
+      </section>
+
+      <section class="moment section-reveal" id="un-instante" aria-labelledby="moment-title" data-reveal>
+        <div class="moment__label">
+          <p class="eyebrow eyebrow--sage">EL MOMENTO</p>
+          <span class="moment__number" aria-hidden="true">01</span>
+        </div>
+        <div class="moment__copy">
+          <h2 id="moment-title">Un ramo, una sonrisa y un recuerdo para siempre.</h2>
+          <p>Queremos invitarte a ser nuestra madrina de ramo para lanzar y compartir con nosotros uno de los instantes más alegres de la celebración. Nos haría muy felices vivirlo contigo.</p>
+        </div>
+      </section>
+
+      <section class="answer section-reveal" aria-labelledby="answer-title" data-reveal>
+        <p class="eyebrow">LA PREGUNTA ES TUYA</p>
+        <h2 id="answer-title">¿Aceptas, Gaby?</h2>
+        <p>Nos encantará tenerte a nuestro lado en este momento.</p>
+        <button class="answer__button" id="open-confirm" type="button" aria-haspopup="dialog">
+          Sí, quiero ser madrina
+        </button>
+        <p class="answer__status" id="response-status" role="status" aria-live="polite">Tu respuesta se guardará en esta invitación.</p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Hecho con mucho cariño, para Gaby.</p>
+      <a href="#inicio">Volver al inicio</a>
+    </footer>
+
+    <dialog class="confirm-dialog" id="confirm-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-description">
+      <div class="confirm-dialog__content">
+        <p class="eyebrow eyebrow--sage">TU RESPUESTA</p>
+        <h2 id="confirm-title">¿Aceptas esta invitación?</h2>
+        <p id="confirm-description">Tu sí nos hará muy felices. ¿Confirmas que quieres ser nuestra madrina de ramo para lanzar?</p>
+        <div class="confirm-dialog__actions">
+          <button class="confirm-dialog__cancel" id="cancel-accept" type="button">Ahora no</button>
+          <button class="answer__button confirm-dialog__submit" id="confirm-accept" type="button">Sí, acepto</button>
+        </div>
+        <p class="confirm-dialog__status" id="confirm-status" role="status" aria-live="polite"></p>
+      </div>
+    </dialog>
+
+    <noscript>
+      <p class="noscript-note">Activa JavaScript para poder enviar tu respuesta.</p>
+    </noscript>
+  </body>
+</html>
