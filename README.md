@@ -1,33 +1,37 @@
 # Invitación para Gaby
 
-Sitio estático mobile-first para invitar a Gaby a ser madrina de ramo para lanzar. Está hecho con HTML, CSS y JavaScript nativos y puede publicarse en GitHub Pages mediante `.github/workflows/pages.yml`.
+Invitación estática, mobile-first y en español para Gaby como madrina de ramo para lanzar. Usa HTML, CSS y JavaScript nativos y se publica desde GitHub Actions Pages; no requiere build ni dependencias instaladas.
 
-## Vista local
+## Probar en local
 
-Sirve esta carpeta por HTTP para que funcionen los módulos ES y Firebase. Por ejemplo, con Node instalado:
+Sirve la carpeta por HTTP para que los módulos ES y Firebase funcionen:
 
 ```powershell
 npx --yes serve . -l 4177
 ```
 
-Después abre `http://localhost:4177`. La comprobación estática del proyecto se ejecuta con `npm run check`.
+Abre `http://localhost:4177`. Para las comprobaciones de estructura y contratos:
 
-## Imagen principal
+```powershell
+npm run check
+```
 
-Los recortes del hero son PNG RGBA transparentes generados con IA y están en `assets/templo-transparente.png` y `assets/ramo-transparente.png`. El SVG está en línea en `index.html` y compone ambos PNG mediante `<image>`, sin trazos vectoriales que redibujen el arte.
+## Dirección visual
 
-La integración disponible de `@app-6a3293e129088191abf0875820e839da` solo ofrece el flujo `website-builder-flow` y sus modelos de generación declaran salida `image`, no `svg`. Por eso las imágenes se conservaron como raster transparente y se animan dentro del SVG, en lugar de etiquetarlas como vectores generados. El ramo usa un scroll timeline CSS nativo (`0–22vh`), con transición activada por `IntersectionObserver` como respaldo; con “reducir movimiento” activado, permanece estático.
+La composición continúa la invitación de Mary y Everardo: cielo azul bruma, pliegues blush y salvia, una hoja de papel marfil, serif Cormorant Garamond en borgoña y acento oro discreto. Los recortes transparentes del Santuario y el ramo viven como imágenes dentro del SVG en línea; el ramo usa `assets/ramo-invitacion-v2.webp` y se desplaza con una animación nativa ligada al scroll, con alternativa de `IntersectionObserver` para navegadores sin scroll timelines. No se agrega un listener de scroll por cuadro y el movimiento se desactiva con `prefers-reduced-motion`.
+
+Las fuentes Cormorant Garamond y Manrope se sirven localmente desde `assets/fonts/`. El contenido, los datos del evento y los controles permanecen en HTML accesible.
+
+## Procedencia del arte
+
+El recorte del ramo fue generado con OpenAI ImageGen a partir de una dirección breve: rosas rosa y marfil, follaje salvia y listón blush; sin fondo, texto ni manos. El PNG transparente se optimizó a WebP conservando el canal alfa en `assets/ramo-invitacion-v2.webp` (1063 × 1479 px). El wrapper SVG en línea contiene únicamente `<image>` del ramo y del recorte transparente del Santuario; la traslación del ramo es una animación CSS nativa ligada al scroll, no un redibujo vectorial.
 
 ## Respuesta y Firebase
 
-La invitación autentica de forma anónima al enviar el sí y crea `responses/gaby-ramo` con una sola escritura `setDoc`. No consulta documentos. Firestore limita la ruta a una respuesta de creación y el navegador usa `localStorage` solo para mostrar el estado después de una respuesta exitosa.
+La invitación inicia Firebase Anonymous Auth al confirmar y hace una sola creación de `responses/gaby-ramo` mediante `setDoc`, con `accepted`, `createdAt: serverTimestamp()`, `inviteId`, `recipients` y `responderUid`. El cliente no lee respuestas; `localStorage` solo conserva el estado visual de esta invitación. Las reglas locales mantienen la creación única por documento y la denegación predeterminada.
 
-`firebase-config.js` contiene configuración cliente pública para el proyecto existente `padrinos-de-anillo-2027`; no se deben colocar credenciales administrativas ni secretos en este sitio.
-
-Para aceptar respuestas en producción, la autenticación anónima debe estar habilitada en Firebase Authentication y las reglas locales deben publicarse en el mismo proyecto. No se incluyen credenciales administrativas.
-
-`firestore.rules` conserva las reglas desplegadas de Mary/Everardo y Felipe, añade Gaby y Caro con creación única por ruta, y mantiene la denegación predeterminada. Las reglas locales aún deben publicarse en Firebase para activar las respuestas de Gaby y Caro; hasta entonces, el sitio no puede guardar su aceptación. La página no lee respuestas y las reglas deniegan lecturas, cambios y creaciones repetidas. Este archivo es común a ambos sitios.
+`firebase-config.js` contiene configuración cliente pública del proyecto `padrinos-de-anillo-2027`, no credenciales administrativas. Para guardar respuestas, Anonymous Auth debe estar habilitado y las reglas correspondientes deben estar publicadas en Firebase. Este proyecto no despliega reglas ni incluye credenciales administrativas.
 
 ## GitHub Pages
 
-El sitio se publica desde `JesusINF/gaby-madrina-de-ramo` con **GitHub Actions** al subir cambios a `main`. El workflow publica la raíz del repositorio.
+El workflow `.github/workflows/pages.yml` publica la raíz del sitio desde GitHub Actions cuando se actualiza la rama `main` o se ejecuta manualmente. Esta implementación no crea, modifica ni publica repositorios remotos.

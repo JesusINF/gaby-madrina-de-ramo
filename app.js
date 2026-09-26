@@ -15,7 +15,7 @@ const cancelButton = document.querySelector("#cancel-accept");
 const dialog = document.querySelector("#confirm-dialog");
 const responseStatus = document.querySelector("#response-status");
 const confirmStatus = document.querySelector("#confirm-status");
-const heroArt = document.querySelector(".hero__art");
+const heroArt = document.querySelector(".hero__scene");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 let authRequest;
@@ -119,7 +119,7 @@ if (
     }
   }, { threshold: 0, rootMargin: "0px 0px -45% 0px" });
 
-  const scrollMotionTrigger = document.querySelector(".letter");
+  const scrollMotionTrigger = document.querySelector(".story");
   if (scrollMotionTrigger) scrollMotionObserver.observe(scrollMotionTrigger);
 }
 
