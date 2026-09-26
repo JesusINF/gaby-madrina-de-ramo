@@ -144,6 +144,10 @@ button {
   height: 100%;
 }
 
+.hero__scene image {
+  filter: drop-shadow(0 8px 7px rgb(73 52 47 / 13%));
+}
+
 #bouquet-art {
   transform-box: view-box;
   transform-origin: 50% 50%;

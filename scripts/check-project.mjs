@@ -10,8 +10,12 @@ const [html, app, css, rules, workflow, firebaseConfig] = await Promise.all([
   read("../firebase-config.js")
 ]);
 const svg = html.match(/<svg\b[\s\S]*?<\/svg>/)?.[0] ?? "";
-const bouquetAsset = new URL("../assets/ramo-invitacion-v2.webp", import.meta.url);
-const bouquetAssetExists = await access(bouquetAsset).then(() => true).catch(() => false);
+const bouquetAsset = new URL("../assets/ramo-papercraft-v1.webp", import.meta.url);
+const sanctuaryAsset = new URL("../assets/santuario-papercraft-v1.webp", import.meta.url);
+const [bouquetAssetExists, sanctuaryAssetExists] = await Promise.all([
+  access(bouquetAsset).then(() => true).catch(() => false),
+  access(sanctuaryAsset).then(() => true).catch(() => false)
+]);
 
 const failures = [];
 const expect = (condition, message) => {
@@ -20,8 +24,8 @@ const expect = (condition, message) => {
 
 expect(html.includes('<html lang="es-MX">'), "HTML should declare Spanish language.");
 expect(html.includes('id="hero-title"') && html.includes('id="open-confirm"'), "Invitation heading and response action should exist.");
-expect(svg.includes('href="assets/templo-transparente.png"') && svg.includes('href="assets/ramo-invitacion-v2.webp"'), "Inline SVG should reference the sanctuary and optimized bouquet cutouts.");
-expect(bouquetAssetExists, "The optimized transparent bouquet asset should be present.");
+expect(svg.includes('href="assets/santuario-papercraft-v1.webp"') && svg.includes('href="assets/ramo-papercraft-v1.webp"'), "Inline SVG should reference the papercraft sanctuary and bouquet cutouts.");
+expect(bouquetAssetExists && sanctuaryAssetExists, "The optimized transparent papercraft assets should be present.");
 expect(html.includes('<time datetime="2027-01-23">23-01-2027</time>') && html.includes("La Piedad, Michoacán"), "Invitation should include the date and place.");
 expect((html.match(/id="open-confirm"/g) ?? []).length === 1 && html.includes('id="confirm-accept"'), "Invitation should show one acceptance CTA and confirm it in the dialog.");
 expect(app.includes('doc(db, "responses", INVITATION_ID)'), "Response should target the invitation document.");
